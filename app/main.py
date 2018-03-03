@@ -211,7 +211,7 @@ def end():
     # TODO: Do things with data
 
     return {
-        'taunt': 'Roz, my tender, oozing blossom, youre looking fabulous today. Is that a new haircut? Tell me its a new haircut. Its got to be a new haircut. New makeup? You had a lift? You had a tuck? You had something? Something has been inserted in in you that makes you look... Listen, I need a favor. Randall was working late last night out on the scare floor. I really need the key to the door he was using.'
+        'taunt': 'Roz, my tender, oozing blossom, youre looking fabulous today.'
     }
 
 
