@@ -40,13 +40,13 @@ def move():
     data = bottle.request.json
 
     # TODO: Do things with data
-    
+
     directions = ['up', 'down', 'left', 'right']
     direction = random.choice(directions)
     print direction
     return {
         'move': direction,
-        'taunt': 'battlesnake-python!'
+        'taunt': 'What can I say? The camera love me!'
     }
 
 
