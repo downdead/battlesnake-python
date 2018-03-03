@@ -1,32 +1,31 @@
-from AStar import *
 import bottle
 import copy
 import math
 import os
 
-SNEK_BUFFER = 3
-ID = 'de508402-17c8-4ac7-ab0b-f96cb53fbee8'
 SNAKE = 1
-FOOD = 2
-SAFTEY = 3
+FOOD = 3
 
 def dist(p, q):
     dx = abs(p[0] - q[0])
     dy = abs(p[1] - q[1])
     return dx + dy;
 
-def direction(from_cell, to_cell):
+def prime_direction(from_cell, to_cell):
     dx = to_cell[0] - from_cell[0]
     dy = to_cell[1] - from_cell[1]
 
-    if dx == 1:
-        return 'right'
-    elif dx == -1:
-        return 'left'
-    elif dy == -1:
-        return 'up'
-    elif dy == 1:
-        return 'down'
+    if abs(dx) > abs(dy):
+        if dx < 0:
+            return 'left'
+        else:
+            return 'right'
+
+    else:
+        if dy < 0:
+            return 'down'
+        else:
+            return 'up'
 
 def closest(items, start):
     closest_item = None
@@ -44,10 +43,9 @@ def closest(items, start):
 def init(data):
     grid = [[0 for col in xrange(data['height'])] for row in xrange(data['width'])]
     for snek in data['snakes']:
-        if snek['id'] == ID:
-            mysnake = snek
         for coord in snek['coords']:
             grid[coord[0]][coord[1]] = SNAKE
+    mysnake = data['you']
 
 
     for f in data['food']:
@@ -97,13 +95,12 @@ def start():
 def move():
     data = bottle.request.json
     snek, grid = init(data)
-    food = data['food']
+    things = data['food']
     my_coords = snek['coords']
     my_head = snek['coords'][0]
     goal = closest(food, my_head)
-    path = a_star(my_head, goal, grid, snek_coords)
     return {
-        'move': direction(path[0], path[1]),
+        'move': prime_direction(my_head, goal),
         'taunt': 'insert mike wazowski quote here'
     }
 
