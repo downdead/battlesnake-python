@@ -91,7 +91,7 @@ def start():
 
     return {
         'color': '#00FF00',
-        'taunt': '{} ({}x{})'.format(game_id, board_width, board_height),
+        'taunt': 'Oh, thats great, blame it on the little guy. How original. He mustve read the schedule wrong with his one eye.',
         'head_url': head_url
     }
 
