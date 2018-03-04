@@ -93,10 +93,10 @@ def move():
     data = bottle.request.json
     turn = data['turn']
     size = data['you']['length']
-    if data['you']['health'] > 50:
+    if data['you']['health'] > 20:
         return {
             'move': circle(turn, int((size/4)+1)),
-            'taunt': 'Roz, my tender, oozing blossom, youre looking fabulous today.'
+            'taunt': 'insert mike wazowski quote here'
         }
     else:
         things = data['food']['data']
@@ -115,7 +115,7 @@ def end():
     # TODO: Do things with data
 
     return {
-        'taunt': 'What can I say? The camera loves me!'
+        'taunt': 'battlesnake-python!'
     }
 
 
