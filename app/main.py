@@ -3,17 +3,26 @@ import copy
 import math
 import os
 
-SNAKE = 1
-FOOD = 3
-
 def dist(p, q):
-    dx = abs(p[1] - q[1])
-    dy = abs(p[2] - q[2])
+    dx = abs(p['x'] - q['x'])
+    dy = abs(p['y'] - q['y'])
     return dx + dy;
 
+def circle(turn, radius):
+
+    dir = turn%(4*(radius+1))
+    if dir < radius:
+        return 'up'
+    elif dir < (2*radius):
+        return 'left'
+    elif dir < (2*radius):
+        return 'down'
+    elif dir < (2*radius):
+        return 'right'
+
 def prime_direction(from_cell, to_cell):
-    dx = to_cell[1] - from_cell[1]
-    dy = to_cell[2] - from_cell[2]
+    dx = to_cell['x'] - from_cell['x']
+    dy = to_cell['y'] - from_cell['y']
 
     if abs(dx) > abs(dy):
         if dx < 0:
@@ -31,7 +40,6 @@ def closest(items, start):
     closest_item = None
     closest_distance = 10000
 
-    # TODO: use builtin min for speed up
     for item in items:
         item_distance = distance(start, item)
         if item_distance < closest_distance:
@@ -83,13 +91,22 @@ def start():
 @bottle.post('/move')
 def move():
     data = bottle.request.json
-    things = data['food']['data']
-    my_head = data['you'][0][0][0]
-    goal = closest(things, my_head)
-    return {
-        'move': prime_direction(my_head, goal),
-        'taunt': 'insert mike wazowski quote here'
-    }
+    turn = data['turn']
+    size = data['you']['length']
+    hunger = data['you']['health']
+    if hunger > 50:
+        return {
+            'move': circle(turn, int(size/4)),
+            'taunt': 'insert mike wazowski quote here'
+        }
+    else:
+        things = data['food']['data']
+        my_head = data['you']['body']['data'][0]
+        goal = closest(things, my_head)
+        return {
+            'move': prime_direction(my_head, goal),
+            'taunt': 'insert mike wazowski quote here'
+        }
 
 
 @bottle.post('/end')
