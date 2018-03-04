@@ -41,7 +41,7 @@ def closest(items, start):
     closest_distance = 10000
 
     for item in items:
-        item_distance = distance(start, item)
+        item_distance = dist(start, item)
         if item_distance < closest_distance:
             closest_item = item
             closest_distance = item_distance
@@ -103,7 +103,7 @@ def move():
         my_head = data['you']['body']['data'][0]
         goal = closest(things, my_head)
         return {
-            'move': 'left',
+            'move': prime_direction(my_head, goal),
             'taunt': 'insert mike wazowski quote here'
         }
 
