@@ -96,7 +96,7 @@ def move():
     if data['you']['health'] > 50:
         return {
             'move': circle(turn, int((size/4)+1)),
-            'taunt': 'insert mike wazowski quote here'
+            'taunt': 'Roz, my tender, oozing blossom, youre looking fabulous today.'
         }
     else:
         things = data['food']['data']
@@ -115,7 +115,7 @@ def end():
     # TODO: Do things with data
 
     return {
-        'taunt': 'battlesnake-python!'
+        'taunt': 'What can I say? The camera loves me!'
     }
 
 
