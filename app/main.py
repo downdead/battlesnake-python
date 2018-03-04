@@ -10,14 +10,14 @@ def dist(p, q):
 
 def circle(turn, radius):
 
-    dir = turn%(4*(radius+1))
-    if dir < radius:
+    dir = turn%(4*(radius))
+    if dir < (radius):
         return 'up'
     elif dir < (2*radius):
         return 'left'
-    elif dir < (2*radius):
+    elif dir < (3*radius):
         return 'down'
-    elif dir < (2*radius):
+    elif dir < (4*radius):
         return 'right'
 
 def prime_direction(from_cell, to_cell):
@@ -93,10 +93,9 @@ def move():
     data = bottle.request.json
     turn = data['turn']
     size = data['you']['length']
-    hunger = data['you']['health']
-    if hunger > 50:
+    if data['you']['health'] > 50:
         return {
-            'move': 'down',
+            'move': circle(turn, int((size/4)+1)),
             'taunt': 'insert mike wazowski quote here'
         }
     else:
@@ -104,7 +103,7 @@ def move():
         my_head = data['you']['body']['data'][0]
         goal = closest(things, my_head)
         return {
-            'move': prime_direction(my_head, goal),
+            'move': 'left',
             'taunt': 'insert mike wazowski quote here'
         }
 
