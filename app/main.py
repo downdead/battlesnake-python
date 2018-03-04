@@ -96,7 +96,7 @@ def move():
     hunger = data['you']['health']
     if hunger > 50:
         return {
-            'move': circle(turn, int(size/4)),
+            'move': 'down',
             'taunt': 'insert mike wazowski quote here'
         }
     else:
