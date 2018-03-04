@@ -7,13 +7,13 @@ SNAKE = 1
 FOOD = 3
 
 def dist(p, q):
-    dx = abs(p[0] - q[0])
-    dy = abs(p[1] - q[1])
+    dx = abs(p[1] - q[1])
+    dy = abs(p[2] - q[2])
     return dx + dy;
 
 def prime_direction(from_cell, to_cell):
-    dx = to_cell[0] - from_cell[0]
-    dy = to_cell[1] - from_cell[1]
+    dx = to_cell[1] - from_cell[1]
+    dy = to_cell[2] - from_cell[2]
 
     if abs(dx) > abs(dy):
         if dx < 0:
@@ -40,18 +40,7 @@ def closest(items, start):
 
     return closest_item
 
-def init(data):
-    grid = [[0 for col in xrange(data['height'])] for row in xrange(data['width'])]
-    for snek in data['snakes']:
-        for coord in snek['coords']:
-            grid[coord[0]][coord[1]] = SNAKE
-    mysnake = data['you']
 
-
-    for f in data['food']:
-        grid[f[0]][f[1]] = FOOD
-
-    return mysnake, grid
 
 @bottle.route('/static/<path:path>')
 def static(path):
@@ -94,11 +83,9 @@ def start():
 @bottle.post('/move')
 def move():
     data = bottle.request.json
-    snek, grid = init(data)
-    things = data['food']
-    my_coords = snek['coords']
-    my_head = snek['coords'][0]
-    goal = closest(food, my_head)
+    things = data['food']['data']
+    my_head = data['you'][0][0][0]
+    goal = closest(things, my_head)
     return {
         'move': prime_direction(my_head, goal),
         'taunt': 'insert mike wazowski quote here'
